@@ -4,7 +4,7 @@
 
 ​	站点提供用户上传流量CSV文件自动检测流量类型的功能。
 
-![image-20251209211641906](D:\狗屎\毕设\AttackType\assets\showindex.png)
+![image-20251209211641906](https://raw.githubusercontent.com/13768494/AttackType/refs/heads/main/assets/showindex.png)
 
 ## 使用
 
