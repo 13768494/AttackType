@@ -1,7 +1,7 @@
 import pandas as pd
 
-input_path = "/home/zgy/Works/MachineLearning/AttackType/Data/AllLabelFlows_Summed.csv"
-output_path = "/home/zgy/Works/MachineLearning/AttackType/Data/AllLabelFlows_Summed_NoOther.csv"
+input_file = "未处理的CSV.csv"
+output_file = "处理完成后的CSV.csv"
 
 df = pd.read_csv(input_path)
 print("Original data volume:", len(df))

@@ -2,8 +2,8 @@ import os
 import pandas as pd
 
 # 输入输出路径
-input_file = "/home/zgy/Works/MachineLearning/AttackType/Data/tmp/sourcedata/GeneratedLabelledFlows/Friday-WorkingHours-Morning.pcap_ISCX.csv"
-output_file = "/home/zgy/Works/MachineLearning/AttackType/Data/PCSV/P3.csv"
+input_file = "未处理的CSV.csv"
+output_file = "处理完成后的CSV.csv"
 
 # 统一目标字段（训练时使用的78字段）
 selected_columns = [
