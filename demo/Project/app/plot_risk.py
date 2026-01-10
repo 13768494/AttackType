@@ -16,6 +16,7 @@ def plot_attack_distribution(df):
         '#ffff33',
     ][:len(attack_count)]  # 根据实际类型数量切片
 
+    # 绘制饼图
     fig = px.pie(
         names=attack_count.index,
         values=attack_count.values,
@@ -31,7 +32,7 @@ def plot_attack_distribution(df):
         pull=[0]*len(attack_count),
         showlegend=True
     )
-
+    # 绘制图例
     fig.update_layout(
         uniformtext_minsize=10,
         uniformtext_mode='hide',
