@@ -5,7 +5,6 @@ import numpy as np
 from sklearn.preprocessing import LabelEncoder
 
 # 配置
-
 selected_columns = [
     'destination_port', 'flow_duration', 'total_fwd_packets', 
     'total_backward_packets', 'total_length_of_fwd_packets',
@@ -33,7 +32,6 @@ selected_columns = [
 ]
 
 # 标签归一
-
 label_map = {
     "BENIGN": "BENIGN",
     "DDoS": "DoS", "DoS Hulk": "DoS", "DoS GoldenEye": "DoS",
@@ -60,7 +58,6 @@ LABEL_ENCODER_MAP = {
 }
 
 # 列名映射
-
 column_map = {
     "dst port": "destination_port",
     "dst_port": "destination_port",
@@ -184,16 +181,17 @@ def process_csv(file_io, output_path):
 
     df = df[selected_columns]
 
-    # 数值型清洗 & 强制float
+    # 数值型清洗&强制float
     num_cols = [c for c in selected_columns if c != "label"]
 
     for col in num_cols:
         df[col] = pd.to_numeric(df[col], errors="coerce")
 
+    # 无穷大/非法字符/空值 自动清洗
     df.replace([np.inf, -np.inf], np.nan, inplace=True)
     df.fillna(0, inplace=True)
 
-    # Label 编码
+    # Label使用数字编码
     df["label"] = df["label"].map(LABEL_ENCODER_MAP).fillna(6).astype(int)
 
     # 保存
