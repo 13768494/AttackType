@@ -1,49 +1,6 @@
-# README
+# 攻击流量检测系统使用手册
 
-## 介绍
-
-​	站点提供用户上传流量CSV文件自动检测流量类型的功能。
-
-![image-20251209211641906](https://raw.githubusercontent.com/13768494/AttackType/refs/heads/main/assets/showindex.png)
-
-## 使用
-
-**服务启动**
-
-```less
-streamlit run streamlit_app.py 
-```
-
-​	选择一个流量包的CSV上传即可使用。如果只用原始的.pcap包，可以使用站点提供的[CICFlowMeter-4.0](https://www.researchgate.net/profile/Arash-Habibi-Lashkari/publication/326991554_CICFlowmeter-V40_formerly_known_as_ISCXFlowMeter_is_a_network_traffic_Bi-flow_generator_and_analyser_for_anomaly_detection_httpsgithubcomISCXCICFlowMeter/data/5b717144a6fdcc87df742e3e/cicflowmeter-4.zip?origin=publication_detail&_tp=eyJjb250ZXh0Ijp7ImZpcnN0UGFnZSI6InB1YmxpY2F0aW9uIiwicGFnZSI6InB1YmxpY2F0aW9uRG93bmxvYWQiLCJwcmV2aW91c1BhZ2UiOiJwdWJsaWNhdGlvbiJ9fQ)工具制作。
-
-## 一、部署环境
-
-> 操作系统：Ubuntu 24.10 TLS
-> Java：openjdk version "1.8.0_452"
-> Python：Python 3.12.7
-
-```less
-sudo apt update && sudo apt install -y openjdk-8-jdk python3 python3-venv python3-pip
-```
-
-**requirements.txt**
-
-```less
-streamlit==1.51.0
-pandas==2.3.3
-chardet==5.2.0
-joblib==1.5.2
-matplotlib==3.10.7
-plotly==6.5.0
-lightgbm==4.6.0
-scikit-learn==1.7.2
-numpy==2.3.5
-shap==0.50.0
-```
-
-## 二、项目结构
-
-​	项目包括机器学习阶段以及站点开发阶段的所有源码，用户可以使用提供的机器学习源码来跑对应的模型。生成出自己的模型可以替换掉站点中`models`文件夹的内容，就可以使用自己的模型来进行流量攻击类型的预测。
+## 一、项目目录结构
 
 ```less
 AttackType
@@ -80,3 +37,69 @@ AttackType
  ┣ README.md
 ```
 
+## 二、环境部署
+
+> 操作系统：Ubuntu 24.10 TLS
+> Python：Python 3.12.7
+> Java：openjdk version "1.8.0_452"
+
+```shell
+# 配置必要开发环境
+sudo apt update && sudo apt install -y openjdk-8-jdk python3 python3-venv python3-pip
+```
+
+requirements
+
+```shell
+# 安装开发环境Python必要库
+streamlit==1.51.0
+pandas==2.3.3
+chardet==5.2.0
+joblib==1.5.2
+matplotlib==3.10.7
+plotly==6.5.0
+lightgbm==4.6.0
+scikit-learn==1.7.2
+numpy==2.3.5
+shap==0.50.0
+```
+
+## 三、服务启动
+
+进入安装了开发必要的Python库的虚拟环境。
+
+![image-20260131151316054](D:\狗屎\软著申请\.md\assets\image-20260131151316054.png)
+
+使用`streamlit`命令启动站点主入口`streamlit_app.py`（最好进入app路径再执行，否则会出现用户上传的文件没有读取权限的问题）。
+
+![image-20260131151557390](D:\狗屎\软著申请\.md\assets\image-20260131151557390.png)
+
+浏览器就会自动打开系统页面。
+
+![image-20260131151624255](D:\狗屎\软著申请\.md\assets\image-20260131151624255.png)
+
+用户点击`Browse files`选择本地需要检测的CSV流量文件即可进行流量风险的预测。
+
+![image-20260131152110339](D:\狗屎\软著申请\.md\assets\image-20260131152110339.png)
+
+<center>风险预测数据可视化结果</center>
+
+![image-20260131152229551](D:\狗屎\软著申请\.md\assets\image-20260131152229551.png)
+
+<center>用户上传CSV预览以及风险预测结果</center>
+
+点击`下载预测结果 CSV`就可以把页面展示的列表保存到本地进行预览，如果用户只有原始的.pcap流量数据可以点击下方的数据处理工具转换为.csv文件。
+
+![image-20260131152433684](D:\狗屎\软著申请\.md\assets\image-20260131152433684.png)
+
+## *模型训练
+
+使用`Lightgbm_Baseline.py`即可根据需求训练模型，将自己整合好的CSV文件所在目录填入`pd.read_csv`即可指定训练集。
+
+![image-20260131152811749](D:\狗屎\软著申请\.md\assets\image-20260131152811749.png)
+
+在训练过程会输出训练的日志，训练结束之后会保存在用户指定的目录下，并生成两个文件`lgb_baseline.joblib（基线模型）`以及`label_encoder.joblib(编码器)`。
+
+![image-20260131152930100](D:\狗屎\软著申请\.md\assets\image-20260131152930100.png)
+
+后续只需要将自己训练好的模型替换掉`AttackType\demo\Project\models`目录中的旧模型即可使用新训练的模型进行风险预测。
