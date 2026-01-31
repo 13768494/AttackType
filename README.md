@@ -18,7 +18,7 @@ streamlit run streamlit_app.py
 
 ## 一、部署环境
 
-> 操作系统：Ubuntu 24.10
+> 操作系统：Ubuntu 24.10 TLS
 > Java：openjdk version "1.8.0_452"
 > Python：Python 3.12.7
 
